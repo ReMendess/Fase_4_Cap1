@@ -116,6 +116,7 @@ Cada modelo apresentou pontos fortes distintos:
 
 Embora modelos de Transfer Learning frequentemente apresentem desempenho superior em tarefas de visão computacional, neste treinamento a CNN obteve os melhores resultados, superando o MobileNetV2 em acurácia, recall e F1-Score. Isso se deve ao tempo de epócas reduzidos de treinamento.
 
+Por fim, dentro do notebook python testei a classificação criando um protótipo de apresentação dos resultados, No qual recebe a imagem de raio-x e realiza a classificação.
 <img src="assets/predicao.png" widht="150">
 
 
