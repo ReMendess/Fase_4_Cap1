@@ -17,9 +17,9 @@ Nessa quarta fase desenvolvi ferramentas que automatizam a triagem e o diagnóst
 
 Indo além, criamos uma interface moderna com React e Vite. Também desenvolvemos e treinamos um modelo de visão computacional para a análise de exames de eletrocardiograma.
 
-# Links Videos:
+## Links Videos:
 ### Parte 1 e Parte 2: 
-### Ir Além: 
+### Ir Além: https://youtu.be/1NBNX88V1-0
 ### App: https://youtube.com/shorts/XTpQ_kAq_G8
 
 
@@ -197,20 +197,5 @@ Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 - <b>Parte_2</b>: Arquivo csv e programa Python classificador NPL probabilistico, usando TF_IDF.
   
 
-  
-## Requisitos
-#### Ambiente
-- Node.js 20.x ou 22.x LTS (recomendado para Vite 8) + npm
-- Python 3.10–3.12 
-- Portal web: Node 20/22, React 19, Vite 8, React Router 7. 
-- Notebook: Python 3.10–12, pip install -r requirements.txt (pandas, scikit-learn, numpy, JupyterLab).
 
-#### Versões 
-- react 19.2.4
-- react-dom 19.2.4
-- react-router-dom 7.13.2
-- pandas 2.1
-- scikit-learn 1.4
-- numpy 1.26
-- jupyterlab 4 
 
