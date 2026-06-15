@@ -36,6 +36,7 @@ O dataset Chest X-Ray Pneumonia disponível publicamente no Kaggle. O conjunto c
 As imagens já se encontram separadas em conjuntos de treinamento, validação e teste.
 
 <img src="assets/dataset.png" widht="150">
+<img src="assets/imagens.png" widht="150">
 
 
 Para Pré-Processamento as etapas realizadas foram:
@@ -112,6 +113,8 @@ Cada modelo apresentou pontos fortes distintos:
 
 Embora modelos de Transfer Learning frequentemente apresentem desempenho superior em tarefas de visão computacional, neste treinamento a CNN obteve os melhores resultados, superando o MobileNetV2 em acurácia, recall e F1-Score. Isso se deve ao tempo de epócas reduzidos de treinamento.
 
+<img src="assets/predicao.png" widht="150">
+
 
 # Ir Além
 
@@ -122,6 +125,10 @@ Dentro
 
 Indo além desenvolvi um assistente de detecção de pneumonia, usando API Flask com o modelo MobileNet, usando Expo - React Native, criei a interface do app mobile.
 
+
+<img src="assets/assistente_web.png" widht="150">
+<img src="assets/assistente2_web.png" widht="150">
+<img src="assets/app.jpeg" widht="150">
 
 Aplicação composta por:
 - **backend/** — API Flask com modelo MobileNet (TensorFlow/Keras)
