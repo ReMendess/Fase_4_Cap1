@@ -86,10 +86,11 @@ Apesar de possuir aproximadamente 3,5 milhões de parâmetros, esse número é m
 
 Foram avaliadas duas abordagens para a classificação das imagens médicas: uma CNN desenvolvida do zero e um modelo baseado em Transfer Learning com MobileNetV2. Os resultados obtidos são apresentados na tabela abaixo:
 
-Modelo	Accuracy	Precision	Recall	F1-Score
-CNN	87,02%	85,19%	95,90%	90,23%
-MobileNetV2	79,97%	96,82%	70,26%	81,43%
-CNN Desenvolvida do Zero
+|Modelo	|Accuracy|	Precision|	Recall|	F1-Score|
+|------|--------|-------|--------|--------|
+|**CNN**|87,02%|	85,19%|	95,90%| 90,23%|
+|**MobileNetV2** |79,97% |96,82% |70,26% |81,43%|
+
 
 A CNN apresentou o melhor desempenho geral entre os modelos avaliados, alcançando 87,02% de acurácia e 90,23% de F1-Score. O modelo também obteve um recall de 95,90%, indicando elevada capacidade de identificar corretamente os casos de pneumonia.
 
@@ -118,23 +119,31 @@ Embora modelos de Transfer Learning frequentemente apresentem desempenho superio
 
 # Ir Além
 
-Dentro
+Nessa etapa fiz uma análise de vieses do dataset. Expliquei o desbalanceamento de classes, também analisei a falta de informações referente a politicas legais, populacionais e éticas dos dados. Explico o uso do class weight e sugiro outras formas de mitigação. 
 
 
 # Ir Além 2
 
-Indo além desenvolvi um assistente de detecção de pneumonia, usando API Flask com o modelo MobileNet, usando Expo - React Native, criei a interface do app mobile.
-
+Indo além desenvolvi um assistente de detecção de pneumonia, usando API Flask e Exp Go - React Native, criei a interface do app mobile.
 
 <img src="assets/assistente_web.png" widht="150">
+
+O assistente roda o modelo do MobileNet, pois apresentou melhores resultados ao identificar casos positivos, o que é essencial para modelos na área da saúde.
+
+A aplicação permite o usuário enviar uma imagem de raio-x do toráx, aciona o modelo treinado por meio de APIs e retorna a classificação, discriminando entre duas categorias "Normal" ou "Penumonia"
 <img src="assets/assistente2_web.png" widht="150">
-<img src="assets/app.jpeg" widht="150">
+
+A aplicação roda nativamente no celular de forma responsiva.
+
+<img src="assets/app.jpeg" widht="80">
+
+### App: https://youtube.com/shorts/XTpQ_kAq_G8
 
 Aplicação composta por:
 - **backend/** — API Flask com modelo MobileNet (TensorFlow/Keras)
 - **cardio-assistant/** — App mobile/web com Expo (React Native)
 
-## Pré-requisitos
+### Pré-requisitos
 
 - Python 3.10+ (venv já incluído em `venv/`)
 - Node.js 18+
@@ -142,7 +151,7 @@ Aplicação composta por:
 
 ---
 
-## 1. Iniciar o backend (API)
+### 1. Iniciar o backend (API)
 
 Abra um terminal na pasta do projeto:
 
@@ -169,7 +178,7 @@ Deve retornar: `{"status":"ok","model":"mobilenet_pneumonia.keras"}`
 
 ---
 
-## 2. Iniciar o app (Expo)
+### 2. Iniciar o app (Expo)
 
 Abra **outro terminal**:
 
@@ -189,7 +198,7 @@ Opções após o Expo iniciar:
 
 ---
 
-## 3. Configurar URL do servidor
+### 3. Configurar URL do servidor
 
 O app detecta automaticamente:
 
@@ -199,19 +208,8 @@ O app detecta automaticamente:
 | Emulador Android | `http://10.0.2.2:5000` |
 | Celular físico | Precisa do IP da sua máquina na rede Wi-Fi |
 
-Para **celular físico**, crie o arquivo `cardio-assistant/.env`:
 
-```env
-EXPO_PUBLIC_API_URL=http://192.168.x.x:5000
-```
-
-Substitua `192.168.x.x` pelo IP local do seu PC (veja com `ipconfig` no PowerShell).
-
-Reinicie o Expo após alterar o `.env`.
-
----
-
-## Fluxo de uso
+### Fluxo de uso
 
 1. Backend rodando (`python app.py`)
 2. App aberto no Expo
@@ -221,7 +219,7 @@ Reinicie o Expo após alterar o `.env`.
 ---
 
 
-## Estrutura
+### Estrutura
 
 ```
 Ir_Alem2/
@@ -244,13 +242,12 @@ Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 
 - <b>assets</b>: Imagens relevantes para documentação desse repositório.
 
-- <b>Ir_Alem</b>: Interface e todo código React + Vite.
+- <b>Ir_Alem</b>: Relatório de análise de ética do dataset e dos modelos.
 
-- <b>Ir_Alem_2</b>: Notebook python com o modelo MLP para visão computacional.
+- <b>Ir_Alem_2</b>: código da aplicação mobile.
 
-- <b>Parte_1</b>: Arquivo txt, csv e código Python referentes ao classificador NPL baseado em regras e mapa ontologico criado.
+- <b>Parte1e2</b>: Arquivo notebook python com as etapas de tratamento e treinamento dos modelos, CNN e de Transfer Learning.
 
-- <b>Parte_2</b>: Arquivo csv e programa Python classificador NPL probabilistico, usando TF_IDF.
   
 
 
