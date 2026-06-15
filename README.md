@@ -13,9 +13,9 @@
 
 
 # Descrição
-Nessa quarta fase desenvolvi ferramentas que automatizam a triagem e o diagnóstico médico por meio de Processamento de Linguagem Natural (NLP) e Machine Learning. Utilizamos duas técnicas em NLP, baseado em regras e estatístico.
+Nessa quarta fase aprofundamos em visão computacional, por meio de modelos de redes neurais convulacionais CNNs.
 
-Indo além, criamos uma interface moderna com React e Vite. Também desenvolvemos e treinamos um modelo de visão computacional para a análise de exames de eletrocardiograma.
+Indo além, criei uma interface moderna com React Native para dispositivos mobiles. 
 
 ## Links Videos:
 ### Parte 1 e Parte 2: 
@@ -24,55 +24,104 @@ Indo além, criamos uma interface moderna com React e Vite. Também desenvolvemo
 
 
 # Parte 1
-Implementamos um sistema de extração de informações para interpretar relatos clínicos.
+Usando o dataset "Chest X-Ray Images (Pneumonia)" com mais de cinco mil imagens, criei um pipeline onde realizei técnicas de pré-processamento, como redimensionamento, normalização e data augmentation.
 
-Através de buscas por palavras-chave e expressões comuns (ex: "aperto no tórax", "fadiga"), o algoritmo sugere diagnósticos preliminares como Infarto ou Insuficiência Cardíaca, simulando o apoio à decisão médica.
+dataset: https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia
 
-#### Como funciona:
+O dataset Chest X-Ray Pneumonia disponível publicamente no Kaggle. O conjunto contém imagens classificadas em duas categorias:
+
+- Normal
+- Pneumonia
+
+As imagens já se encontram separadas em conjuntos de treinamento, validação e teste.
+
+<img src="assets/dataset.png" widht="150">
 
 
-<img src="assets/Mapa_Ontologia.png" widht="150">
+Para Pré-Processamento as etapas realizadas foram:
+
+- Redimensionamento das imagens para 128 pixels.
+- Normalização dos pixels para o intervalo entre 0 e 1.
+- Aplicação de técnicas de aumento de dados (rotação, zoom e espelhamento horizontal).
+- Organização dos dados em conjuntos de treinamento, validação e teste.
+
+
+Redimensionei as imagens para escalas de (128,128) para facilitar o treinamento, diminuindo as escalas. A normalização acelera o treinamento e melhora a convergência. O aumento de dados reduz overfitting e melhora a capacidade de generalização do modelo.
+
+<img src="assets/pre_processamento.png" widht="150">
+
+
+Durante a análise do dataset foi identificado um desbalanceamento entre as classes. O conjunto de treinamento contém 1.341 imagens classificadas como Normal e 3.875 imagens classificadas como Pneumonia. Esse cenário pode introduzir viés no treinamento do modelo, favorecendo a classe majoritária. Para mitigar esse problema foi usada técnicas como data augmentation e ponderação de classes durante o treinamento.
+
+
+<img src="assets/distribuicao.png" widht="150">
 
 # Parte 2
 
-Agora utilizando processamento de texto com TF-IDF (Term Frequency-Inverse Document Frequency) para converter relatos médicos em vetores numéricos. Seguindo uma abordagem mais tradicional, voltada a estatistica e probabilidade, treinamos um algoritmo de Machine Learning (Scikit-learn) para classificar os pacientes entre "Baixo Risco" e "Alto Risco", permitindo uma triagem rápida e eficiente baseada na gravidade dos sintomas.
+Seguindo, no mesmo notebook python realizamos as seguintes etapas:
 
-#### Como funciona:
+- Treinamento de uma CNN simples.
+- Treinamento de uma CNN com Transfer Learning.
+- Comparação dos resultados.
+- Interface para classificação.
 
-Criamos outro programa python "Gerar_Dataset.py" para gerar um novo arquivo csv "frases_risco.csv". Esse novo dataset é necessário pois descreve de forma mais textual e natural do que o dataset usado na parte 1.
+Foram implementadas duas abordagens para classificação de imagens médicas: uma CNN construída do zero e um modelo de transfer learning utilizando MobileNetV2.
 
-<img src="assets/gerar_dataset.png" widht="150">
+O modelo CNN desenvolvido do zero possui 3.304.769 parâmetros distribuídos em 10 camadas. É composto por três camadas convolucionais (Conv2D) para extração de características, três camadas de Max Pooling para redução da dimensionalidade, uma camada Flatten para transformar em um vetor unidimensional, uma camada Dropout para reduzir o risco de overfitting e duas camadas densas (Dense) responsáveis pela classificação final. As funções de ativação utilizadas foram ReLU e Sigmoid na camada de saída, usadas para problemas de classificação binária.
+
+<img src="assets/CNN.png" widht="150">
+
+O modelo MobileNetV2 foi escolhido por apresentar uma arquitetura mais leve em comparação com outros modelos utilizados em Transfer Learning, como VGG16 e ResNet. 
+Apesar de possuir aproximadamente 3,5 milhões de parâmetros, esse número é menor do que o de arquiteturas mais complexas, permitindo tempos de treinamento reduzidos, além de menor consumo de memória. Essas características tornam o modelo especialmente adequado para aplicações com recursos computacionais limitados e para protótipos que exigem boa precisão aliada a desempenho eficiente.
 
 
-<img src="assets/teste_modelo_Logis_Regre.png" widht="150">
+<img src="assets/MobileNet.png" widht="150">
+
+ Devido ao desbalanceamento do dataset (25,71% Normal e 74,29% Pneumonia), foi aplicada ponderação de classes durante o treinamento. 
+
+
+
+### Análise das Métricas
+
+Foram avaliadas duas abordagens para a classificação das imagens médicas: uma CNN desenvolvida do zero e um modelo baseado em Transfer Learning com MobileNetV2. Os resultados obtidos são apresentados na tabela abaixo:
+
+Modelo	Accuracy	Precision	Recall	F1-Score
+CNN	87,02%	85,19%	95,90%	90,23%
+MobileNetV2	79,97%	96,82%	70,26%	81,43%
+CNN Desenvolvida do Zero
+
+A CNN apresentou o melhor desempenho geral entre os modelos avaliados, alcançando 87,02% de acurácia e 90,23% de F1-Score. O modelo também obteve um recall de 95,90%, indicando elevada capacidade de identificar corretamente os casos de pneumonia.
+
+Em aplicações médicas, o recall é uma métrica importante, pois reduz a ocorrência de falsos negativos, ou seja, casos em que pacientes com a doença seriam classificados como saudáveis. Embora a precisão tenha sido um pouco menor (85,19%), o modelo demonstrou um equilíbrio adequado entre identificação de casos positivos e confiabilidade das previsões.
+
+
+O MobileNetV2 apresentou comportamento diferente. Sua principal característica foi a alta precisão de 96,82%, indicando que quando o modelo prevê pneumonia, a probabilidade de essa classificação estar correta é muito elevada.
+
+Por outro lado, o modelo obteve um recall de apenas 70,26%, demonstrando dificuldade em identificar todos os casos positivos presentes no conjunto de teste. Isso significa que uma parcela considerável dos pacientes com pneumonia não foi detectada pelo modelo, aumentando a quantidade de falsos negativos.
+
+Como consequência, a acurácia geral (79,97%) e o F1-Score (81,43%) ficaram abaixo dos resultados obtidos pela CNN.
+
+<img src="assets/comparacao.png" widht="150">
+
+Cada modelo apresentou pontos fortes distintos:
+
+- CNN: maior acurácia, maior recall e melhor F1-Score.
+- MobileNetV2: maior precisão.
+- CNN: melhor equilíbrio entre sensibilidade e desempenho geral.
+- MobileNetV2: classificações positivas mais conservadoras e confiáveis.
+
+Embora modelos de Transfer Learning frequentemente apresentem desempenho superior em tarefas de visão computacional, neste treinamento a CNN obteve os melhores resultados, superando o MobileNetV2 em acurácia, recall e F1-Score. Isso se deve ao tempo de epócas reduzidos de treinamento.
+
 
 # Ir Além
 
-Criamos do zero uma interface web completa responsiva para a gestão da clínica cardiológica.
-Utilizamos: React + Vite + Styled Components/CSS Modules.
-
-<img src="assets/Login.png" widht="150">
-
-Dentre as Funcionalidades: 
-- Gerenciamento de estado global com Context API.
-- Autenticação simulada com persistência via LocalStorage.
-- Consumo de dados via API fake para listagem de pacientes.
-- Dashboards dinâmicos com métricas de agendamento e saúde.
-
-Usando Context e diversos hooks e componentes, criamos 4 paginas
-
-<img src="assets/pages.png" widht="150">
-<img src="assets/AuthContext.png" widht="150">
-
-De forma dinamica e simulada é possível realizar um login com autenticação, ver a lista de pacientes e marcar uma consulta.
-
-<img src="assets/Portal.png" widht="150">
-<img src="assets/agendamento.png" widht="150">
+Dentro
 
 
 # Ir Além 2
 
- Assistente de Detecção de Pneumonia
+Indo além desenvolvi um assistente de detecção de pneumonia, usando API Flask com o modelo MobileNet, usando Expo - React Native, criei a interface do app mobile.
+
 
 Aplicação composta por:
 - **backend/** — API Flask com modelo MobileNet (TensorFlow/Keras)
