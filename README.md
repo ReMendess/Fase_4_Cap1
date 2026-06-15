@@ -13,9 +13,11 @@
 
 
 # Descrição
-Nessa quarta fase aprofundamos em visão computacional, por meio de modelos de redes neurais convulacionais CNNs.
+Nessa quarta fase aprofundamos em visão computacional, por meio de modelos de redes neurais convulacionais CNNs. Usando um notebook python e um dataset de imagens de raio-x, pré-processamos e treinamos dois modelos, um CNN do zero e um modelo de MobileNetV2 - Transfer Learning.
 
-Indo além, criei uma interface moderna com React Native para dispositivos mobiles. 
+Também realizamos uma análise de vieses do dataset e do desbalanceamento identificado.
+
+Indo além, criei uma aplicação mobile moderna com React Native, permitindo o envio e classificação de imagens de raio-x. 
 
 ## Links Videos:
 ### Parte 1 e Parte 2: 
